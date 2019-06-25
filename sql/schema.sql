@@ -13,6 +13,14 @@ roomCode VARCHAR(3) NOT NULL,
 FOREIGN KEY (roomCode) REFERENCES RoomType (roomCode)
 )
 
+
+CREATE TABLE RoomPrice (
+roomId INTEGER NOT NULL,
+price DOUBLE NOT NULL,
+currencyCode VARCHAR(3),
+FOREIGN KEY (roomId) REFERENCES Rooms (id)
+)
+
 -- CREATE TRANSACTION TABLES
 CREATE TABLE Guest (
 id SERIAL PRIMARY KEY,
@@ -42,27 +50,27 @@ INSERT INTO RoomType (roomCode, roomName, adults, juniors, babies) VALUES ('APT'
 
 -- Add rooms to hotel
 -- 4 Double Standard
-INSEERT INTO Rooms (roomCode) VALUES ('DST')
-INSEERT INTO Rooms (roomCode) VALUES ('DST')
-INSEERT INTO Rooms (roomCode) VALUES ('DST')
-INSEERT INTO Rooms (roomCode) VALUES ('DST')
+INSERT INTO Rooms (roomCode) VALUES ('DST')
+INSERT INTO Rooms (roomCode) VALUES ('DST')
+INSERT INTO Rooms (roomCode) VALUES ('DST')
+INSERT INTO Rooms (roomCode) VALUES ('DST')
 -- 4 Double Superior
-INSEERT INTO Rooms (roomCode) VALUES ('DSP')
-INSEERT INTO Rooms (roomCode) VALUES ('DSP')
-INSEERT INTO Rooms (roomCode) VALUES ('DSP')
-INSEERT INTO Rooms (roomCode) VALUES ('DSP')
+INSERT INTO Rooms (roomCode) VALUES ('DSP')
+INSERT INTO Rooms (roomCode) VALUES ('DSP')
+INSERT INTO Rooms (roomCode) VALUES ('DSP')
+INSERT INTO Rooms (roomCode) VALUES ('DSP')
 -- 2 Family Small
-INSEERT INTO Rooms (roomCode) VALUES ('FMS')
-INSEERT INTO Rooms (roomCode) VALUES ('FMS')
+INSERT INTO Rooms (roomCode) VALUES ('FMS')
+INSERT INTO Rooms (roomCode) VALUES ('FMS')
 -- 2 Family Large
-INSEERT INTO Rooms (roomCode) VALUES ('FML')
-INSEERT INTO Rooms (roomCode) VALUES ('FML')
+INSERT INTO Rooms (roomCode) VALUES ('FML')
+INSERT INTO Rooms (roomCode) VALUES ('FML')
 -- 2 Junior Suites
-INSEERT INTO Rooms (roomCode) VALUES ('JST')
-INSEERT INTO Rooms (roomCode) VALUES ('JST')
+INSERT INTO Rooms (roomCode) VALUES ('JST')
+INSERT INTO Rooms (roomCode) VALUES ('JST')
 -- 2 Apartments
-INSEERT INTO Rooms (roomCode) VALUES ('APT')
-INSEERT INTO Rooms (roomCode) VALUES ('APT')
+INSERT INTO Rooms (roomCode) VALUES ('APT')
+INSERT INTO Rooms (roomCode) VALUES ('APT')
 
 
 
