@@ -1,0 +1,24 @@
+{
+  "startDate": "2020-07-01",
+  "endDate": "2020-07-05",
+  "reference": "4AG73D ",
+  "totalAmount": 250.0,
+  "CustomerFullName ": "Albert Einstein",
+  "CustomerMail": "albert.einstein@trivago.com",
+  "roomTypes": [{
+    "roomTypeCode ": "DBL",
+    "roomTypeName": "Double Room",
+    "occupancy": {
+      "adults": 2,
+      "babies": 1
+    },
+    "amount": 100.0
+  }, {
+    "roomTypeCode ": "TRL",
+    "roomTypeName": "Triple Room",
+    "occupancy": {
+      "adults": 3
+    },
+    "amount": 150.0
+  }]
+}

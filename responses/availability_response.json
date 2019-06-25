@@ -1,0 +1,32 @@
+{
+  "startDate": "2020-06-01",
+  "endDate": "2020-06-04",
+  "roomTypes": [{
+    "roomTypeCode": "DBL",
+    "roomTypeName": "Double Room",
+    "occupancy": {
+      "adults": 2,
+      "babies": 1
+    },
+    "amount": 100.0,
+    "roomsAvailable": 3
+  }, {
+    "roomTypeCode": "TRL",
+    "roomTypeName": "Triple Room",
+    "occupancy": {
+      "adults": 2,
+      "babies": 1
+    },
+    "amount": 120.0,
+    "roomsAvailable": 2
+  }, {
+
+    "roomTypeCode": "TRL",
+    "roomTypeName": "Triple Room",
+    "occupancy": {
+      "adults": 3
+    },
+    "amount": 150.0,
+    "roomsAvailable": 2
+  }]
+}
