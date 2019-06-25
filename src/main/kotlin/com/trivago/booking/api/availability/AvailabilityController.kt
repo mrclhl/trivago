@@ -15,6 +15,6 @@ class AvailabilityController {
 
     @PostMapping(AvailabilityEndpoint, consumes = [APPLICATION_JSON_VALUE], produces = [APPLICATION_JSON_VALUE])
     fun roomAvailability(@RequestBody availabilityRequest: AvailabilityRequest) {
-
+        availabilityRequest.areDatesValid()
     }
 }
