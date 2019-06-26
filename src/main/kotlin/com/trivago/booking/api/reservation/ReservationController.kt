@@ -1,7 +1,7 @@
 package com.trivago.booking.api.reservation
 
 import com.trivago.booking.api.request.ReservationRequest
-import com.trivago.booking.api.response.BaseResponse
+import com.trivago.booking.api.response.ReservationResponse
 import org.springframework.util.MimeTypeUtils
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PostMapping
@@ -17,15 +17,23 @@ class ReservationController {
     }
 
     @PostMapping(ReservationEndpoint, consumes = [(MimeTypeUtils.APPLICATION_JSON_VALUE)], produces = [(MimeTypeUtils.APPLICATION_JSON_VALUE)])
-    fun reservation(@RequestBody reservationRequest: ReservationRequest): BaseResponse {
+    fun reservation(@RequestBody reservationRequest: ReservationRequest): ReservationResponse {
         reservationRequest.validateInput()
 
-        return BaseResponse(reservationRequest.startDate, reservationRequest.endDate, emptyList())
+        val reservationResponse = ReservationResponse(1, 200.0, "", "")
+        reservationResponse.startDate = reservationRequest.startDate
+        reservationResponse.endDate = reservationRequest.endDate
+
+        return reservationResponse
     }
 
     @GetMapping(VerificationEndpoint, consumes = [(MimeTypeUtils.APPLICATION_JSON_VALUE)], produces = [(MimeTypeUtils.APPLICATION_JSON_VALUE)])
-    fun verification(@RequestBody(required = true) reference: Int): BaseResponse {
+    fun verification(@RequestBody(required = true) reference: Int): ReservationResponse {
 
-        return BaseResponse("", "", emptyList())
+        val reservationResponse = ReservationResponse(1, 200.0, "", "")
+        reservationResponse.startDate = ""
+        reservationResponse.endDate = ""
+
+        return reservationResponse
     }
 }
