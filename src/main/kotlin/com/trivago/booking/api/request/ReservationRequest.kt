@@ -1,7 +1,8 @@
 package com.trivago.booking.api.request
 
 import com.trivago.booking.api.exceptions.InvalidEmailException
-import javax.naming.InvalidNameException
+import com.trivago.booking.api.exceptions.InvalidNameException
+
 
 class ReservationRequest : BaseRequest() {
 

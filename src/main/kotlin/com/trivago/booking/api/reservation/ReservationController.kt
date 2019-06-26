@@ -19,8 +19,7 @@ class ReservationController {
 
     @PostMapping(ReservationEndpoint, consumes = [(MimeTypeUtils.APPLICATION_JSON_VALUE)], produces = [(MimeTypeUtils.APPLICATION_JSON_VALUE)])
     fun reservation(@RequestBody reservationRequest: ReservationRequest): BaseResponse {
-        reservationRequest.areDatesValid()
-
+        reservationRequest.validateInput()
 
         return BaseResponse(reservationRequest.startDate, reservationRequest.endDate, emptyList())
     }
