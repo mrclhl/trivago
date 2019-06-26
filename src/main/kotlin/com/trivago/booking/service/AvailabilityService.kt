@@ -1,9 +1,9 @@
 package com.trivago.booking.service
 
 import com.trivago.booking.api.request.AvailabilityRequest
-import com.trivago.booking.model.RoomTypes
+import com.trivago.booking.model.Room
 
 interface AvailabilityService {
 
-    fun retrieveAvailableRoomTypes(availabilityRequest: AvailabilityRequest): RoomTypes
+    fun retrieveAvailableRoomTypes(availabilityRequest: AvailabilityRequest): List<Room>
 }
