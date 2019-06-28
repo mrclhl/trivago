@@ -25,6 +25,6 @@ class AvailabilityController {
 
         val availableRoomTypes = availabilityService.retrieveAvailableRoomTypes(availabilityRequest)
 
-        return BaseResponse(availabilityRequest.startDate, availabilityRequest.endDate, availableRoomTypes)
+        return availableRoomTypes
     }
 }
