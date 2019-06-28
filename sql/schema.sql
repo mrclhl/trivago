@@ -83,13 +83,11 @@ INSERT INTO RoomPrice (roomId, price, currency) VALUES (1, 99.0, 'EUR');
 INSERT INTO RoomPrice (roomId, price, currency) VALUES (2, 99.0, 'EUR');
 INSERT INTO RoomPrice (roomId, price, currency) VALUES (3, 99.0, 'EUR');
 INSERT INTO RoomPrice (roomId, price, currency) VALUES (4, 99.0, 'EUR');
-INSERT INTO RoomPrice (roomId, price, currency) VALUES (5, 109.0, 'EUR');
-INSERT INTO RoomPrice (roomId, price, currency) VALUES (6, 109.0, 'EUR');
 -- Double Superior
 INSERT INTO RoomPrice (roomId, price, currency) VALUES (7, 119.0, 'EUR');
 INSERT INTO RoomPrice (roomId, price, currency) VALUES (8, 119.0, 'EUR');
-INSERT INTO RoomPrice (roomId, price, currency) VALUES (9, 139.0, 'EUR');
-INSERT INTO RoomPrice (roomId, price, currency) VALUES (10, 139.0, 'EUR');
+INSERT INTO RoomPrice (roomId, price, currency) VALUES (9, 119.0, 'EUR');
+INSERT INTO RoomPrice (roomId, price, currency) VALUES (10, 119.0, 'EUR');
 -- Family Small
 INSERT INTO RoomPrice (roomId, price, currency) VALUES (11, 149.0, 'EUR');
 INSERT INTO RoomPrice (roomId, price, currency) VALUES (12, 149.0, 'EUR');

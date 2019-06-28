@@ -5,5 +5,5 @@ import com.trivago.booking.model.HotelGuests
 class RoomType {
 
     var roomTypeCode: String = ""
-    var occupancy: Array<HotelGuests> = arrayOf()
+    var occupancy: HotelGuests = HotelGuests()
 }

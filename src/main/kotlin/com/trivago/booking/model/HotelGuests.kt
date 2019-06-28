@@ -1,3 +1,3 @@
 package com.trivago.booking.model
 
-data class HotelGuests(var adults: Int? = null, var juniors: Int? = null, var babies: Int? = null)
+data class HotelGuests(var adults: Int = 0, var juniors: Int = 0, var babies: Int = 0)
