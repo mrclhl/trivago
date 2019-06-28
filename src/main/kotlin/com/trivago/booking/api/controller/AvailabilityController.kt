@@ -1,4 +1,4 @@
-package com.trivago.booking.api.availability
+package com.trivago.booking.api.controller
 
 import com.trivago.booking.api.request.AvailabilityRequest
 import com.trivago.booking.api.response.BaseResponse

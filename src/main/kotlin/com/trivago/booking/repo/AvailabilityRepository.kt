@@ -8,5 +8,5 @@ interface AvailabilityRepository {
 
     fun retrieveAvailableRoomTypes(startDate: LocalDate, endDate: LocalDate): List<Room>
 
-    fun roomTypeAvailable(startDate: LocalDate, endDate: LocalDate, roomTypeCode: String, occupancy: HotelGuests): Boolean
+    fun retrieveAvailableRoom(startDate: LocalDate, endDate: LocalDate, roomTypeCode: String, occupancy: HotelGuests): Room?
 }

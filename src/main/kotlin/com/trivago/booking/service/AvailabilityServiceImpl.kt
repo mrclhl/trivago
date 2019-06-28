@@ -22,9 +22,7 @@ class AvailabilityServiceImpl : AvailabilityService {
         return availableRoomTypes
     }
 
-    override fun roomTypeAvailable(startDate: String, endDate: String, roomTypeCode: String, occupancy: HotelGuests): Boolean {
-        val parsedStartDate = LocalDate.parse(startDate)
-        val parsedEndDate = LocalDate.parse(endDate)
-        return availabilityRepository.roomTypeAvailable(parsedStartDate, parsedEndDate, roomTypeCode, occupancy)
+    override fun retrieveAvailableRoom(startDate: LocalDate, endDate: LocalDate, roomTypeCode: String, occupancy: HotelGuests): Room? {
+        return availabilityRepository.retrieveAvailableRoom(startDate, endDate, roomTypeCode, occupancy)
     }
 }

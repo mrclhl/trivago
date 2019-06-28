@@ -16,14 +16,14 @@ FOREIGN KEY (roomCode) REFERENCES RoomType (roomCode)
 -- This could also be a transaction table as the prices may vary with the season and occupancy.
 -- Keeping it simple for this exercise with fixed prices.
 CREATE TABLE RoomPrice (
-roomId INTEGER NOT NULL,
+roomCode VARCHAR(3) NOT NULL,
 price DOUBLE PRECISION NOT NULL,
 currency VARCHAR(3),
-FOREIGN KEY (roomId) REFERENCES Rooms (id)
+FOREIGN KEY (roomCode) REFERENCES RoomType (roomCode)
 );
 
 -- CREATE TRANSACTION TABLES
-CREATE TABLE Guest (
+CREATE TABLE Customer (
 id SERIAL PRIMARY KEY,
 customerName VARCHAR NOT NULL,
 customerMail VARCHAR NOT NULL
@@ -31,12 +31,13 @@ customerMail VARCHAR NOT NULL
 
 CREATE TABLE Reservation (
 id SERIAL PRIMARY KEY,
-guestId INTEGER NOT NULL,
+customerId INTEGER NOT NULL,
 roomId INTEGER NOT NULL,
 startDate DATE NOT NULL,
 endDate DATE NOT NULL,
 bookingTime TIMESTAMP NOT NULL,
-FOREIGN KEY (guestId) REFERENCES Guest (id),
+reference VARCHAR(6) NOT NULL,
+FOREIGN KEY (customerId) REFERENCES Customer (id),
 FOREIGN KEY (roomId) REFERENCES Rooms (id)
 );
 
@@ -50,7 +51,7 @@ INSERT INTO RoomType (roomCode, roomName, adults, juniors, babies) VALUES ('JST'
 INSERT INTO RoomType (roomCode, roomName, adults, juniors, babies) VALUES ('APT','Apartment', 4, 0, 0);
 
 -- Add rooms to hotel
--- 4 Double Standard
+-- 6 Double Standard
 INSERT INTO Rooms (roomCode) VALUES ('DST');
 INSERT INTO Rooms (roomCode) VALUES ('DST');
 INSERT INTO Rooms (roomCode) VALUES ('DST');
@@ -79,29 +80,17 @@ INSERT INTO Rooms (roomCode) VALUES ('APT');
 
 -- Add room prices
 -- Double Standard
-INSERT INTO RoomPrice (roomId, price, currency) VALUES (1, 99.0, 'EUR');
-INSERT INTO RoomPrice (roomId, price, currency) VALUES (2, 99.0, 'EUR');
-INSERT INTO RoomPrice (roomId, price, currency) VALUES (3, 99.0, 'EUR');
-INSERT INTO RoomPrice (roomId, price, currency) VALUES (4, 99.0, 'EUR');
+INSERT INTO RoomPrice (roomCode, price, currency) VALUES ('DST', 99.0, 'EUR');
 -- Double Superior
-INSERT INTO RoomPrice (roomId, price, currency) VALUES (7, 119.0, 'EUR');
-INSERT INTO RoomPrice (roomId, price, currency) VALUES (8, 119.0, 'EUR');
-INSERT INTO RoomPrice (roomId, price, currency) VALUES (9, 119.0, 'EUR');
-INSERT INTO RoomPrice (roomId, price, currency) VALUES (10, 119.0, 'EUR');
+INSERT INTO RoomPrice (roomCode, price, currency) VALUES ('DSP', 119.0, 'EUR');
 -- Family Small
-INSERT INTO RoomPrice (roomId, price, currency) VALUES (11, 149.0, 'EUR');
-INSERT INTO RoomPrice (roomId, price, currency) VALUES (12, 149.0, 'EUR');
-INSERT INTO RoomPrice (roomId, price, currency) VALUES (13, 149.0, 'EUR');
+INSERT INTO RoomPrice (roomCode, price, currency) VALUES ('FMS', 149.0, 'EUR');
 -- Family Large
-INSERT INTO RoomPrice (roomId, price, currency) VALUES (14, 169.0, 'EUR');
-INSERT INTO RoomPrice (roomId, price, currency) VALUES (15, 169.0, 'EUR');
+INSERT INTO RoomPrice (roomCode, price, currency) VALUES ('FML', 169.0, 'EUR');
 -- Junior Suites
-INSERT INTO RoomPrice (roomId, price, currency) VALUES (16, 159.0, 'EUR');
-INSERT INTO RoomPrice (roomId, price, currency) VALUES (17, 159.0, 'EUR');
-INSERT INTO RoomPrice (roomId, price, currency) VALUES (18, 159.0, 'EUR');
+INSERT INTO RoomPrice (roomCode, price, currency) VALUES ('JST', 159.0, 'EUR');
 -- Apartments
-INSERT INTO RoomPrice (roomId, price, currency) VALUES (19, 199.0, 'EUR');
-INSERT INTO RoomPrice (roomId, price, currency) VALUES (20, 199.0, 'EUR');
+INSERT INTO RoomPrice (roomCode, price, currency) VALUES ('APT', 199.0, 'EUR');
 
 COMMIT;
 

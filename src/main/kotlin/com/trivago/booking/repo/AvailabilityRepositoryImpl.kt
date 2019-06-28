@@ -15,16 +15,16 @@ class AvailabilityRepositoryImpl : AvailabilityRepository {
         const val roomTypesQuery: String = "SELECT rooms.roomCode, roomtype.roomName, roomtype.adults, roomtype.juniors, roomtype.babies, roomprice.price, COUNT(rooms.roomCode) " +
                 "FROM rooms " +
                 "  INNER JOIN roomtype ON rooms .roomCode = roomtype.roomCode " +
-                "  INNER JOIN roomprice ON rooms .id = roomprice.roomid " +
+                "  INNER JOIN roomprice ON roomtype .roomCode = roomprice.roomCode " +
                 "  LEFT JOIN reservation ON rooms .id = reservation.roomId " +
                 "WHERE reservation.roomId IS NULL OR reservation.startDate NOT BETWEEN ? AND ? AND reservation.endDate NOT BETWEEN ? AND ? " +
                 "GROUP BY rooms.roomCode, roomtype.roomName, roomtype.adults, roomtype.juniors, roomtype.babies, roomprice.price " +
                 "ORDER BY roomprice.price ASC;"
         
-        const val isRoomTypeAvailableQuery: String = "SELECT rooms.roomCode, roomtype.roomName, roomtype.adults, roomtype.juniors, roomtype.babies, roomprice.price, COUNT(rooms.roomCode) " +
+        const val isRoomTypeAvailableQuery: String = "SELECT rooms.id, rooms.roomCode, roomtype.roomName, roomtype.adults, roomtype.juniors, roomtype.babies, roomprice.price, COUNT(rooms.roomCode) " +
                 "FROM rooms " +
                 "  INNER JOIN roomtype ON rooms .roomCode = roomtype.roomCode " +
-                "  INNER JOIN roomprice ON rooms .id = roomprice.roomid " +
+                "  INNER JOIN roomprice ON roomtype .roomCode = roomprice.roomCode " +
                 "  LEFT JOIN reservation ON rooms .id = reservation.roomId " +
                 "WHERE reservation.roomId IS NULL " +
                 "  AND roomtype.roomCode LIKE ? " +
@@ -33,7 +33,7 @@ class AvailabilityRepositoryImpl : AvailabilityRepository {
                 "  AND roomtype.babies >= ? " +
                 "      OR reservation.startDate NOT BETWEEN ? AND ? " +
                 "         AND reservation.endDate NOT BETWEEN ? AND ? " +
-                "GROUP BY rooms.roomCode, roomtype.roomName, roomtype.adults, roomtype.juniors, roomtype.babies, roomprice.price " +
+                "GROUP BY rooms.id, rooms.roomCode, roomtype.roomName, roomtype.adults, roomtype.juniors, roomtype.babies, roomprice.price " +
                 "ORDER BY roomprice.price ASC;"
     }
 
@@ -59,14 +59,14 @@ class AvailabilityRepositoryImpl : AvailabilityRepository {
             val price = rs.getDouble("price")
             val count = rs.getInt("count")
 
-            rooms.add(Room(roomCode, roomName, HotelGuests(adults, babies, juniors), price, count))
+            rooms.add(Room(null, roomCode, roomName, HotelGuests(adults, babies, juniors), price, count))
         })
 
         return rooms
     }
 
-    override fun roomTypeAvailable(startDate: LocalDate, endDate: LocalDate, roomTypeCode: String, occupancy: HotelGuests): Boolean {
-        var isAvailable = false
+    override fun retrieveAvailableRoom(startDate: LocalDate, endDate: LocalDate, roomTypeCode: String, occupancy: HotelGuests): Room? {
+        var room: Room? = null
 
         jdbcTemplate.query({con: Connection ->
             val statement = con.prepareStatement(isRoomTypeAvailableQuery)
@@ -80,9 +80,21 @@ class AvailabilityRepositoryImpl : AvailabilityRepository {
             statement.setObject(8, endDate)
             statement
         }, {rs ->
-            isAvailable = rs.first()
+             while (rs.next()) {
+                 if (room === null) {
+                     val roomId = rs.getInt("id")
+                     val roomCode = rs.getString("roomCode")
+                     val roomName = rs.getString("roomName")
+                     val adults = rs.getInt("adults")
+                     val juniors = rs.getInt("juniors")
+                     val babies = rs.getInt("babies")
+                     val price = rs.getDouble("price")
+
+                     room = Room(roomId, roomCode, roomName, HotelGuests(adults, babies, juniors), price, null)
+                 }
+             }
         })
 
-        return isAvailable
+        return room
     }
 }
