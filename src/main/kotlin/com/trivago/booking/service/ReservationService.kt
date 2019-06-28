@@ -1,11 +1,11 @@
 package com.trivago.booking.service
 
 import com.trivago.booking.api.request.ReservationRequest
-import com.trivago.booking.model.ReservationReference
+import com.trivago.booking.model.Booking
 
 interface ReservationService {
 
-    fun makeReservations(reservationRequest: ReservationRequest): ReservationReference?
+    fun makeReservation(reservationRequest: ReservationRequest): String
 
-    fun verifyBooking(reservationReference: ReservationReference): Any
+    fun retrieveBooking(reference: String): Booking
 }
