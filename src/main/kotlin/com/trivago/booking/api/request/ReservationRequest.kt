@@ -2,6 +2,8 @@ package com.trivago.booking.api.request
 
 import com.trivago.booking.api.exceptions.InvalidEmailException
 import com.trivago.booking.api.exceptions.InvalidNameException
+import com.trivago.booking.api.exceptions.RoomCodeMissingException
+import com.trivago.booking.api.exceptions.RoomGuestMissingException
 
 
 class ReservationRequest : BaseRequest() {
@@ -14,6 +16,7 @@ class ReservationRequest : BaseRequest() {
         areDatesValid()
         NameValidator.isNameValid(customerFullName)
         EmailValidator.isEmailValid(customerMail)
+        RoomTypeValidator.isRequestValid(roomTypes)
 
         return true
     }
@@ -44,6 +47,24 @@ class ReservationRequest : BaseRequest() {
                 if (!isValid) throw InvalidEmailException("Invalid email entered. Format must be 'example@mail.com'")
 
                 return isValid
+            }
+        }
+    }
+
+    class RoomTypeValidator {
+        companion object {
+            fun isRequestValid(roomtypes: Array<RoomType>): Boolean {
+                roomtypes.forEach { roomType ->
+                    if (roomType.roomTypeCode.isBlank()) throw RoomCodeMissingException("You need to specify the room code for the reservation.")
+
+                    val adults = roomType.occupancy.adults
+                    val juniors = roomType.occupancy.juniors
+                    val babies = roomType.occupancy.babies
+
+                    if (adults == null && juniors == null && babies == null) throw RoomGuestMissingException("Each room booking needs to contain at least one guest.")
+                }
+
+                return true
             }
         }
     }

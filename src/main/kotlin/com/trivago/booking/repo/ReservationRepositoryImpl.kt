@@ -1,9 +1,9 @@
 package com.trivago.booking.repo
 
 import com.trivago.booking.model.Booking
-import com.trivago.booking.model.HotelGuests
 import com.trivago.booking.model.Reservation
 import com.trivago.booking.model.Room
+import com.trivago.booking.model.RoomGuests
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.jdbc.core.JdbcTemplate
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource
@@ -50,9 +50,22 @@ class ReservationRepositoryImpl : ReservationRepository {
         jdbcTemplate.batchUpdate(makeReservationQuery, reservations, reservations.size) { ps, (startDate, endDate, adults, juniors, babies, roomId) ->
             ps.setObject(1, startDate)
             ps.setObject(2, endDate)
-            ps.setInt(3, adults)
-            ps.setInt(4, juniors)
-            ps.setInt(5, babies)
+
+            when (adults) {
+                null -> ps.setObject(3, null)
+                else -> ps.setInt(3, adults)
+            }
+
+            when (juniors) {
+                null -> ps.setObject(4, null)
+                else -> ps.setInt(4, juniors)
+            }
+
+            when (babies) {
+                null -> ps.setObject(5, null)
+                else -> ps.setInt(5, babies)
+            }
+
             ps.setInt(6, customerId)
             ps.setInt(7, roomId)
             ps.setString(8, reservationReference)
@@ -87,9 +100,11 @@ class ReservationRepositoryImpl : ReservationRepository {
             val startDate = rs.getString("startDate")
             val endDate = rs.getString("endDate")
             val rooms = mutableListOf<Room>()
+            // save first room
             saveRoom(rs, rooms)
 
             while(rs.next()) {
+                // save any other room
                 saveRoom(rs, rooms)
             }
 
@@ -107,6 +122,6 @@ class ReservationRepositoryImpl : ReservationRepository {
         val juniors = rs.getInt("juniors")
         val babies = rs.getInt("babies")
         val price = rs.getDouble("price")
-        rooms.add(Room(null, roomCode, roomName, HotelGuests(adults, juniors, babies), price, null))
+        rooms.add(Room(null, roomCode, roomName, RoomGuests(adults, juniors, babies), price, null))
     }
 }

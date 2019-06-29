@@ -1,9 +1,9 @@
 package com.trivago.booking.api.request
 
-import com.trivago.booking.model.HotelGuests
+import com.trivago.booking.model.RoomGuests
 
 class RoomType {
 
     var roomTypeCode: String = ""
-    var occupancy: HotelGuests = HotelGuests()
+    var occupancy: RoomGuests = RoomGuests(null, null, null)
 }

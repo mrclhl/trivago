@@ -1,7 +1,9 @@
 package com.trivago.booking.api.controller
 
 import com.trivago.booking.api.request.AvailabilityRequest
+import com.trivago.booking.api.request.Occupancy
 import com.trivago.booking.api.response.BaseResponse
+import com.trivago.booking.model.RoomGuests
 import com.trivago.booking.service.AvailabilityService
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.util.MimeTypeUtils.APPLICATION_JSON_VALUE
@@ -22,9 +24,19 @@ class AvailabilityController {
     @PostMapping(AvailabilityEndpoint, consumes = [APPLICATION_JSON_VALUE], produces = [APPLICATION_JSON_VALUE])
     fun roomAvailability(@RequestBody availabilityRequest: AvailabilityRequest): BaseResponse{
         availabilityRequest.areDatesValid()
+        val startDate = availabilityRequest.startDate
+        val endDate = availabilityRequest.endDate
+        val occupancy = availabilityRequest.occupancy
+        val roomGuests: List<RoomGuests>? = occupancy?.map { occ -> occ.toHotelGuests() }
 
-        val availableRoomTypes = availabilityService.retrieveAvailableRoomTypes(availabilityRequest)
+        val availableRoomTypes = availabilityService.retrieveAvailableRoomTypes(startDate, endDate, roomGuests)
 
-        return BaseResponse(availabilityRequest.startDate, availabilityRequest.endDate, availableRoomTypes)
+        return BaseResponse(startDate, endDate, availableRoomTypes)
     }
+
+    fun Occupancy.toHotelGuests() = RoomGuests(
+            adults = adults,
+            juniors = juniors,
+            babies = babies
+    )
 }
