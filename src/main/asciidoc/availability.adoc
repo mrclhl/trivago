@@ -1,0 +1,43 @@
+= Asciidoc template
+:doctype: book
+:icons: font
+:source-highlighter: highlightjs
+:toc: left
+:toclevels: 4
+:sectlinks:
+
+
+= Availability Endpoint
+The endpoint provides an overview on the available room types for the selected check-in and check-out dates / occupancy.
+
+== Endpoint
+The service is available at the `/availability` endpoint via *POST* method.
+
+=== Request parameters
+The service does not use request parameters.
+
+=== Request fields
+include::{snippets}/availability/request-fields.adoc[]
+
+=== Path parameters
+The service does not use path parameters
+
+=== Request headers
+include::{snippets}/availability/http-request.adoc[]
+
+For example, a curl request looks like this:
+
+CURL
+include::{snippets}/availability/curl-request.adoc[]
+
+HTTPie
+include::{snippets}/availability/httpie-request.adoc[]
+
+
+=== Response headers and body
+The following fields are found in the response:
+
+include::{snippets}/availability/http-response.adoc[]
+
+A typical response looks like this:
+include::{snippets}/availability/response-fields.adoc[]

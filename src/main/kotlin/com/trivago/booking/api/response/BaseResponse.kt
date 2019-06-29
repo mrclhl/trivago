@@ -5,18 +5,8 @@ import com.trivago.booking.api.request.Occupancy
 import com.trivago.booking.model.Room
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
-open class BaseResponse {
+open class BaseResponse(var startDate: String, var endDate: String, roomTypes: List<Room>) {
 
-    constructor()
-
-    constructor(startDate: String, endDate: String, roomTypes: List<Room>) {
-        this.startDate = startDate
-        this.endDate = endDate
-        this.roomTypes = roomTypes.map { room -> room.toRoomResponse()}
-    }
-
-    var startDate: String = ""
-    var endDate: String = ""
     var roomTypes: List<RoomResponse> = listOf()
 
     private fun Room.toRoomResponse() = RoomResponse(
@@ -25,6 +15,10 @@ open class BaseResponse {
             roomTypeName = roomTypeName,
             occupancy = Occupancy(roomGuests.adults, roomGuests.juniors, roomGuests.babies),
             amount = amount,
-            availableRooms = availableRooms
+            roomsAvailable = roomsAvailable
     )
+
+    init {
+        this.roomTypes = roomTypes.map { room -> room.toRoomResponse()}
+    }
 }
