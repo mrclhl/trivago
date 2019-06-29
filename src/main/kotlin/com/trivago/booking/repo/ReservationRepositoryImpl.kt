@@ -122,6 +122,7 @@ class ReservationRepositoryImpl : ReservationRepository {
         val juniors = rs.getInt("juniors")
         val babies = rs.getInt("babies")
         val price = rs.getDouble("price")
+
         rooms.add(Room(null, roomCode, roomName, RoomGuests(adults, juniors, babies), price, null))
     }
 }

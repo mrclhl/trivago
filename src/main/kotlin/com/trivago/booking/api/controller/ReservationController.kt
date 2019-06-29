@@ -28,10 +28,8 @@ class ReservationController {
         val reference = reservationService.makeReservation(reservationRequest)
         val booking = reservationService.retrieveBooking(reference)
 
-        val reservationResponse = ReservationResponse(reference, booking.total, booking.customerName, booking.customerMail)
-        reservationResponse.startDate = booking.startDate
-        reservationResponse.endDate = booking.endDate
-        reservationResponse.roomTypes = booking.rooms
+        val reservationResponse = ReservationResponse(reference, booking.total, booking.customerName, booking.customerMail,
+                booking.startDate, booking.endDate, booking.rooms)
 
         return reservationResponse
     }
@@ -40,10 +38,8 @@ class ReservationController {
     fun verification(@RequestBody(required = true) referenceRequest: ReferenceRequest): ReservationResponse {
         val booking = reservationService.retrieveBooking(referenceRequest.reference)
 
-        val reservationResponse = ReservationResponse(referenceRequest.reference, booking.total, booking.customerName, booking.customerMail)
-        reservationResponse.startDate = booking.startDate
-        reservationResponse.endDate = booking.endDate
-        reservationResponse.roomTypes = booking.rooms
+        val reservationResponse = ReservationResponse(referenceRequest.reference, booking.total, booking.customerName, booking.customerMail,
+                booking.startDate, booking.endDate, booking.rooms)
 
         return reservationResponse
     }
