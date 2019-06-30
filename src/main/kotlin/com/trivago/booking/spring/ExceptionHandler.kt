@@ -6,6 +6,7 @@ import com.trivago.booking.api.exceptions.InvalidDateRangeException
 import com.trivago.booking.api.exceptions.InvalidEmailException
 import com.trivago.booking.api.exceptions.InvalidNameException
 import com.trivago.booking.api.exceptions.ReservationNotPossibleException
+import com.trivago.booking.api.exceptions.WrongReferenceFormatException
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.ControllerAdvice
@@ -41,7 +42,12 @@ class ExceptionHandler {
     }
 
     @ExceptionHandler(BookingDoesNotExistException::class)
-    fun reservationNotPossibleHandler(exception: BookingDoesNotExistException): ResponseEntity<*> {
+    fun bookingDoesNotExistHandler(exception: BookingDoesNotExistException): ResponseEntity<*> {
+        return ResponseEntity(exception.message, HttpStatus.BAD_REQUEST)
+    }
+
+    @ExceptionHandler(WrongReferenceFormatException::class)
+    fun wrongReferenceFormatHandler(exception: WrongReferenceFormatException): ResponseEntity<*> {
         return ResponseEntity(exception.message, HttpStatus.BAD_REQUEST)
     }
 }

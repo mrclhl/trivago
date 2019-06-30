@@ -41,6 +41,8 @@ class ReservationController {
 
     @PostMapping(VerificationEndpoint, consumes = [(MimeTypeUtils.APPLICATION_JSON_VALUE)], produces = [(MimeTypeUtils.APPLICATION_JSON_VALUE)])
     fun verification(@RequestBody(required = true) referenceRequest: ReferenceRequest): ReservationResponse {
+        referenceRequest.validateInput()
+
         val booking = reservationService.retrieveReservation(referenceRequest.reference)
 
         val reservationResponse = ReservationResponse(referenceRequest.reference, booking.total, booking.customerName, booking.customerMail,
