@@ -37,7 +37,9 @@ class ReservationControllerTest : BaseTestController() {
     fun reservation_whenDateInvalid_then400() {
         mockMvc.perform(MockMvcRequestBuilders.post(ReservationEndpoint)
                 .contentType(MediaType.APPLICATION_JSON)
-                .content("{\"startDate\":\"2019-06-29\",\"endDate\":\"2019-06-31\"}"))
+                .content("{\"startDate\":\"2019-06-25\",\"endDate\":\"2019-06-31\", " +
+                        "\"customerFullName\": \"Marcel Heil\", \"customerMail\": \"marcel@heil.com\", " +
+                        "\"roomTypes\": [{\"roomTypeCode\": \"DST\", \"occupancy\": {\"adults\": 2, \"juniors\": 0, \"babies\": 0}}]}"))
                 .andExpect(MockMvcResultMatchers.status().isBadRequest)
     }
 
@@ -45,7 +47,9 @@ class ReservationControllerTest : BaseTestController() {
     fun reservation_whenWrongDateFormat_then400() {
         mockMvc.perform(MockMvcRequestBuilders.post(ReservationEndpoint)
                 .contentType(MediaType.APPLICATION_JSON)
-                .content("{\"startDate\":\"2019-06-29\",\"endDate\":\"2019-06-XX\"}"))
+                .content("{\"startDate\":\"2019-06-25\",\"endDate\":\"2019-30-06\", " +
+                        "\"customerFullName\": \"Marcel Heil\", \"customerMail\": \"marcel@heil.com\", " +
+                        "\"roomTypes\": [{\"roomTypeCode\": \"DST\", \"occupancy\": {\"adults\": 2, \"juniors\": 0, \"babies\": 0}}]}"))
                 .andExpect(MockMvcResultMatchers.status().isBadRequest)
     }
 
@@ -53,7 +57,29 @@ class ReservationControllerTest : BaseTestController() {
     fun reservation_whenEndDateBeforeStartDate_then400() {
         mockMvc.perform(MockMvcRequestBuilders.post(ReservationEndpoint)
                 .contentType(MediaType.APPLICATION_JSON)
-                .content("{\"startDate\":\"2019-06-30\",\"endDate\":\"2019-06-29\"}"))
+                .content("{\"startDate\":\"2019-06-25\",\"endDate\":\"2019-06-24\", " +
+                        "\"customerFullName\": \"Marcel Heil\", \"customerMail\": \"marcel@heil.com\", " +
+                        "\"roomTypes\": [{\"roomTypeCode\": \"DST\", \"occupancy\": {\"adults\": 2, \"juniors\": 0, \"babies\": 0}}]}"))
+                .andExpect(MockMvcResultMatchers.status().isBadRequest)
+    }
+
+    @Test
+    fun reservation_whenNoNameEntered_then400() {
+        mockMvc.perform(MockMvcRequestBuilders.post(ReservationEndpoint)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content("{\"startDate\":\"2019-06-25\",\"endDate\":\"2019-06-24\", " +
+                        "\"customerFullName\": \"\", \"customerMail\": \"marcel@heil.com\", " +
+                        "\"roomTypes\": [{\"roomTypeCode\": \"DST\", \"occupancy\": {\"adults\": 2, \"juniors\": 0, \"babies\": 0}}]}"))
+                .andExpect(MockMvcResultMatchers.status().isBadRequest)
+    }
+
+    @Test
+    fun reservation_whenWrongMailFormat_then400() {
+        mockMvc.perform(MockMvcRequestBuilders.post(ReservationEndpoint)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content("{\"startDate\":\"2019-06-25\",\"endDate\":\"2019-06-24\", " +
+                        "\"customerFullName\": \"\", \"customerMail\": \"marcel@heil\", " +
+                        "\"roomTypes\": [{\"roomTypeCode\": \"DST\", \"occupancy\": {\"adults\": 2, \"juniors\": 0, \"babies\": 0}}]}"))
                 .andExpect(MockMvcResultMatchers.status().isBadRequest)
     }
 
