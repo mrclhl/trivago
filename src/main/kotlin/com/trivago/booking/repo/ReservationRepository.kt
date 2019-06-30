@@ -11,5 +11,5 @@ interface ReservationRepository {
 
     fun referenceAlreadyExisting(reference : String): Boolean
 
-    fun retrieveBooking(reference: String): Booking?
+    fun retrieveReservation(reference: String): Booking?
 }

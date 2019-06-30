@@ -24,9 +24,14 @@ class ReservationController {
     @PostMapping(ReservationEndpoint, consumes = [(MimeTypeUtils.APPLICATION_JSON_VALUE)], produces = [(MimeTypeUtils.APPLICATION_JSON_VALUE)])
     fun reservation(@RequestBody reservationRequest: ReservationRequest): ReservationResponse {
         reservationRequest.validateInput()
+        val startDate = reservationRequest.startDate
+        val endDate = reservationRequest.endDate
+        val customerFullName = reservationRequest.customerFullName
+        val customerMail = reservationRequest.customerMail
+        val roomTypes = reservationRequest.roomTypes.toList()
 
-        val reference = reservationService.makeReservation(reservationRequest)
-        val booking = reservationService.retrieveBooking(reference)
+        val reference = reservationService.makeReservation(startDate, endDate, customerFullName, customerMail, roomTypes)
+        val booking = reservationService.retrieveReservation(reference)
 
         val reservationResponse = ReservationResponse(reference, booking.total, booking.customerName, booking.customerMail,
                 booking.startDate, booking.endDate, booking.rooms)
@@ -36,7 +41,7 @@ class ReservationController {
 
     @PostMapping(VerificationEndpoint, consumes = [(MimeTypeUtils.APPLICATION_JSON_VALUE)], produces = [(MimeTypeUtils.APPLICATION_JSON_VALUE)])
     fun verification(@RequestBody(required = true) referenceRequest: ReferenceRequest): ReservationResponse {
-        val booking = reservationService.retrieveBooking(referenceRequest.reference)
+        val booking = reservationService.retrieveReservation(referenceRequest.reference)
 
         val reservationResponse = ReservationResponse(referenceRequest.reference, booking.total, booking.customerName, booking.customerMail,
                 booking.startDate, booking.endDate, booking.rooms)

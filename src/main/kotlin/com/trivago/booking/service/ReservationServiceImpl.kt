@@ -2,7 +2,7 @@ package com.trivago.booking.service
 
 import com.trivago.booking.api.exceptions.BookingDoesNotExistException
 import com.trivago.booking.api.exceptions.ReservationNotPossibleException
-import com.trivago.booking.api.request.ReservationRequest
+import com.trivago.booking.api.request.RoomType
 import com.trivago.booking.model.Booking
 import com.trivago.booking.model.Reservation
 import com.trivago.booking.model.RoomGuests
@@ -24,25 +24,25 @@ class ReservationServiceImpl : ReservationService {
     @Autowired
     private lateinit var availabilityService: AvailabilityService
 
-    override fun makeReservation(reservationRequest: ReservationRequest): String {
-        val startDate = LocalDate.parse(reservationRequest.startDate)
-        val endDate = LocalDate.parse(reservationRequest.endDate)
+    override fun makeReservation(startDate: String, endDate: String, customerFullName: String, customerMail: String, roomTypes: List<RoomType>): String {
+        val parsedStartDate = LocalDate.parse(startDate)
+        val parsedEndDate = LocalDate.parse(endDate)
         val reservations = mutableListOf<Reservation>()
 
-        reservationRequest.roomTypes.forEach {roomType ->
+        roomTypes.forEach {roomType ->
             val roomTypeCode = roomType.roomTypeCode
             val occupancy = roomType.occupancy
-            val availableRoom = availabilityService.retrieveAvailableRoom(startDate, endDate, roomTypeCode, occupancy)
+            val availableRoom = availabilityService.retrieveAvailableRoom(parsedStartDate, parsedEndDate, roomTypeCode, occupancy)
 
             if (availableRoom != null) {
-                reservations.add(Reservation(startDate, endDate,
+                reservations.add(Reservation(parsedStartDate, parsedEndDate,
                         occupancy.adults, occupancy.juniors, occupancy.babies,
                         availableRoom.roomId!!))
             }
         }
 
         if (reservations.isNotEmpty()) {
-            val customerId = reservationRepository.saveCustomer(reservationRequest.customerFullName, reservationRequest.customerMail)
+            val customerId = reservationRepository.saveCustomer(customerFullName, customerMail)
             val reservationReference = createReferenceCode()
             reservationRepository.makeReservation(reservations, customerId, reservationReference)
 
@@ -52,8 +52,8 @@ class ReservationServiceImpl : ReservationService {
         throw ReservationNotPossibleException("Reservation could not be made for the requested dates and room types.")
     }
 
-    override fun retrieveBooking(reference: String): Booking {
-        val booking = reservationRepository.retrieveBooking(reference)
+    override fun retrieveReservation(reference: String): Booking {
+        val booking = reservationRepository.retrieveReservation(reference)
 
         when (booking) {
             null -> throw BookingDoesNotExistException("There is no booking available for this reference.")

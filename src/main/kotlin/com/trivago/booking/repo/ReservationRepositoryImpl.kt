@@ -86,7 +86,7 @@ class ReservationRepositoryImpl : ReservationRepository {
         return referenceExisting
     }
 
-    override fun retrieveBooking(reference: String): Booking? {
+    override fun retrieveReservation(reference: String): Booking? {
         var booking: Booking? = null
 
         jdbcTemplate.query({con: Connection ->

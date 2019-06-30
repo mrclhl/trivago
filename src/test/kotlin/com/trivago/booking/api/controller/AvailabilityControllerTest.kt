@@ -22,7 +22,7 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers
 import org.hamcrest.Matchers.`is` as Is
 import org.mockito.Mockito.`when` as whenever
 
-@WebMvcTest(AvailabilityController::class, secure = false)
+@WebMvcTest(AvailabilityController::class)
 class AvailabilityControllerTest : BaseTestController() {
 
     @MockBean
@@ -100,13 +100,13 @@ class AvailabilityControllerTest : BaseTestController() {
                                 .description("Array where every element represents a possible occupancy for a room type.").optional(),
                         PayloadDocumentation
                                 .fieldWithPath("occupancy[].adults")
-                                .description("The number of adults.").optional(),
+                                .description("The number of adult guests.").optional(),
                         PayloadDocumentation
                                 .fieldWithPath("occupancy[].juniors")
-                                .description("The number of juniors.").optional(),
+                                .description("The number of juniors guests.").optional(),
                         PayloadDocumentation
                                 .fieldWithPath("occupancy[].babies")
-                                .description("The number of babies.").optional()
+                                .description("The number of baby guests.").optional()
                 ),
                 responseFields(
                         fieldWithPath("startDate")
@@ -122,11 +122,11 @@ class AvailabilityControllerTest : BaseTestController() {
                         fieldWithPath("roomTypes[].occupancy")
                                 .description("Represents the possible occupancy for a room type."),
                         fieldWithPath("roomTypes[].occupancy.adults")
-                                .description("The number of adults.").optional().type(Int),
+                                .description("The possible number of adult guests for this room type.").optional().type(Int),
                         fieldWithPath("roomTypes[].occupancy.juniors")
-                                .description("The number of juniors.").optional().type(Int),
+                                .description("The possible number of junior guests for this room type.").optional().type(Int),
                         fieldWithPath("roomTypes[].occupancy.babies")
-                                .description("The number of babies.").optional().type(Int),
+                                .description("The possible number of baby guests for this room type.").optional().type(Int),
                         fieldWithPath("roomTypes[].amount")
                                 .description("The amount for a one night stay in the given room type."),
                         fieldWithPath("roomTypes[].roomsAvailable")
