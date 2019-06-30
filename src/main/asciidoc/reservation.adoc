@@ -1,0 +1,43 @@
+= Asciidoc template
+:doctype: book
+:icons: font
+:source-highlighter: highlightjs
+:toc: left
+:toclevels: 4
+:sectlinks:
+
+
+= Reservation Endpoint
+The endpoint provides the possibility to reserve room(s) for the selected check-in and check-out dates, room type and occupancy.
+
+== Endpoint
+The service is available at the `/reservation` endpoint via *POST* method.
+
+=== Request parameters
+The service does not use request parameters.
+
+=== Request fields
+include::{snippets}/reservation/request-fields.adoc[]
+
+=== Path parameters
+The service does not use path parameters
+
+=== Request headers
+include::{snippets}/reservation/http-request.adoc[]
+
+For example, a curl request looks like this:
+
+CURL
+include::{snippets}/reservation/curl-request.adoc[]
+
+HTTPie
+include::{snippets}/reservation/httpie-request.adoc[]
+
+
+=== Response headers and body
+The following fields are found in the response:
+
+include::{snippets}/reservation/http-response.adoc[]
+
+A typical response looks like this:
+include::{snippets}/reservation/response-fields.adoc[]

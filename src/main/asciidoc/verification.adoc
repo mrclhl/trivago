@@ -1,0 +1,43 @@
+= Asciidoc template
+:doctype: book
+:icons: font
+:source-highlighter: highlightjs
+:toc: left
+:toclevels: 4
+:sectlinks:
+
+
+= Verification Endpoint
+The endpoint provides the possibility to verify an existing reservation reference.
+
+== Endpoint
+The service is available at the `/verification` endpoint via *POST* method.
+
+=== Request parameters
+The service does not use request parameters.
+
+=== Request fields
+include::{snippets}/verification/request-fields.adoc[]
+
+=== Path parameters
+The service does not use path parameters
+
+=== Request headers
+include::{snippets}/verification/http-request.adoc[]
+
+For example, a curl request looks like this:
+
+CURL
+include::{snippets}/verification/curl-request.adoc[]
+
+HTTPie
+include::{snippets}/verification/httpie-request.adoc[]
+
+
+=== Response headers and body
+The following fields are found in the response:
+
+include::{snippets}/verification/http-response.adoc[]
+
+A typical response looks like this:
+include::{snippets}/verification/response-fields.adoc[]

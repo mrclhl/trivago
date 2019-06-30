@@ -187,7 +187,7 @@ class ReservationControllerTest : BaseTestController() {
     }
 
     private fun generateDocumentationForVerificationEndpoint(): ResultHandler {
-        return MockMvcRestDocumentation.document("reservation",
+        return MockMvcRestDocumentation.document("verification",
                 PayloadDocumentation.requestFields(
                         PayloadDocumentation
                                 .fieldWithPath("reference")
