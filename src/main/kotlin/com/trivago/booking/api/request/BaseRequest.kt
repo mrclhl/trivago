@@ -2,6 +2,7 @@ package com.trivago.booking.api.request
 
 import com.trivago.booking.exceptions.DateFormatException
 import com.trivago.booking.exceptions.InvalidDateRangeException
+import com.trivago.booking.service.TimeService
 import java.time.LocalDate
 import java.time.format.DateTimeParseException
 
@@ -10,11 +11,11 @@ open class BaseRequest {
     var startDate: String = ""
     var endDate: String = ""
 
-    fun areDatesValid(): Boolean {
+    fun areDatesValid(timeService: TimeService): Boolean {
         try {
             val parsedStartDate = LocalDate.parse(startDate)
             val parsedEndDate = LocalDate.parse(endDate)
-            val today = LocalDate.now()
+            val today = timeService.retrieveCurrentDate()
 
             if (parsedEndDate.isBefore(parsedStartDate) || parsedEndDate.isEqual(parsedStartDate))
                 throw InvalidDateRangeException("Start date has to be before end date.")

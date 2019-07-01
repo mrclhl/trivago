@@ -4,6 +4,7 @@ import com.trivago.booking.BaseTestController
 import com.trivago.booking.model.Room
 import com.trivago.booking.model.RoomGuests
 import com.trivago.booking.service.AvailabilityService
+import com.trivago.booking.service.TimeService
 import org.junit.Test
 import org.mockito.ArgumentMatchers
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest
@@ -19,6 +20,7 @@ import org.springframework.test.web.servlet.ResultHandler
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers
+import java.time.LocalDate
 import org.hamcrest.Matchers.`is` as Is
 import org.mockito.Mockito.`when` as whenever
 
@@ -27,6 +29,9 @@ class AvailabilityControllerTest : BaseTestController() {
 
     @MockBean
     private lateinit var availabilityService: AvailabilityService
+
+    @MockBean
+    private lateinit var timeService: TimeService
 
     @Test
     fun roomAvailability_whenGet_thenReturn405() {
@@ -61,7 +66,9 @@ class AvailabilityControllerTest : BaseTestController() {
     @Test
     fun roomAvailability_whenInputProper_thenReturnExpectedResponse() {
         val room = Room(null, "DST", "Double Standard", RoomGuests(2, null, null), 99.0, 4)
+        val today = LocalDate.parse("2019-06-01")
 
+        whenever(timeService.retrieveCurrentDate()).thenReturn(today)
         whenever(availabilityService.retrieveAvailableRoomTypes(ArgumentMatchers.anyString(), ArgumentMatchers.anyString(), ArgumentMatchers.anyList())).thenReturn(listOf(room))
 
         mockMvc.perform(post(AvailabilityController.AvailabilityEndpoint)

@@ -4,6 +4,7 @@ import com.trivago.booking.exceptions.InvalidEmailException
 import com.trivago.booking.exceptions.InvalidNameException
 import com.trivago.booking.exceptions.RoomCodeMissingException
 import com.trivago.booking.exceptions.RoomGuestMissingException
+import com.trivago.booking.service.TimeService
 
 
 class ReservationRequest : BaseRequest() {
@@ -12,8 +13,8 @@ class ReservationRequest : BaseRequest() {
     var customerMail: String = ""
     var roomTypes: Array<RoomType> = arrayOf()
 
-    fun validateInput(): Boolean {
-        areDatesValid()
+    fun validateInput(timeService: TimeService): Boolean {
+        areDatesValid(timeService)
         NameValidator.isNameValid(customerFullName)
         EmailValidator.isEmailValid(customerMail)
         RoomTypeValidator.isRequestValid(roomTypes)

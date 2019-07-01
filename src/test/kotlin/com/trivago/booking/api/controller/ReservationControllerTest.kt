@@ -7,6 +7,7 @@ import com.trivago.booking.model.Booking
 import com.trivago.booking.model.Room
 import com.trivago.booking.model.RoomGuests
 import com.trivago.booking.service.ReservationService
+import com.trivago.booking.service.TimeService
 import org.hamcrest.Matchers
 import org.junit.Test
 import org.mockito.ArgumentMatchers
@@ -20,6 +21,7 @@ import org.springframework.test.web.servlet.ResultActions
 import org.springframework.test.web.servlet.ResultHandler
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers
+import java.time.LocalDate
 import org.hamcrest.Matchers.`is` as Is
 import org.mockito.Mockito.`when` as whenever
 
@@ -28,6 +30,9 @@ class ReservationControllerTest : BaseTestController() {
 
     @MockBean
     private lateinit var reservationService: ReservationService
+
+    @MockBean
+    private lateinit var timeService: TimeService
 
     @Test
     fun reservation_whenGet_thenReturn405() {
@@ -89,7 +94,9 @@ class ReservationControllerTest : BaseTestController() {
     fun reservation_whenInputProper_thenReturnExpectedResponse() {
         val room = Room(null, "DST", "Double Standard", RoomGuests(2, null, null), 99.0, null)
         val booking = Booking("2019-06-25", "2019-06-30", 495.0, "Marcel Heil", "marcel@heil.com", listOf(room))
+        val today = LocalDate.parse("2019-06-01")
 
+        whenever(timeService.retrieveCurrentDate()).thenReturn(today)
         whenever(reservationService.makeReservation(ArgumentMatchers.anyString(), ArgumentMatchers.anyString(), ArgumentMatchers.anyString(), ArgumentMatchers.anyString(), ArgumentMatchers.anyList())).thenReturn("A1B2C3")
         whenever(reservationService.retrieveReservation(ArgumentMatchers.anyString())).thenReturn(booking)
 
