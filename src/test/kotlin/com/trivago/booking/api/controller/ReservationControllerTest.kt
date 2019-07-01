@@ -51,6 +51,18 @@ class ReservationControllerTest : BaseTestController() {
     }
 
     @Test
+    fun reservation_whenStartDateBeforeToday_then400() {
+        whenever(timeService.retrieveCurrentDate()).thenReturn(LocalDate.parse("2019-06-26"))
+
+        mockMvc.perform(MockMvcRequestBuilders.post(ReservationEndpoint)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content("{\"startDate\":\"2019-06-25\",\"endDate\":\"2019-06-30\", " +
+                        "\"customerFullName\": \"Marcel Heil\", \"customerMail\": \"marcel@heil.com\", " +
+                        "\"roomTypes\": [{\"roomTypeCode\": \"DST\", \"occupancy\": {\"adults\": 2, \"juniors\": 0, \"babies\": 0}}]}"))
+                .andExpect(MockMvcResultMatchers.status().isBadRequest)
+    }
+
+    @Test
     fun reservation_whenWrongDateFormat_then400() {
         mockMvc.perform(MockMvcRequestBuilders.post(ReservationEndpoint)
                 .contentType(MediaType.APPLICATION_JSON)

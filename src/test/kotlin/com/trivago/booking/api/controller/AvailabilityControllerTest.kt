@@ -48,6 +48,16 @@ class AvailabilityControllerTest : BaseTestController() {
     }
 
     @Test
+    fun roomAvailability_whenStartDateBeforeToday_then400() {
+        whenever(timeService.retrieveCurrentDate()).thenReturn(LocalDate.parse("2019-06-26"))
+
+        mockMvc.perform(post(AvailabilityController.AvailabilityEndpoint)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content("{\"startDate\":\"2019-06-25\",\"endDate\":\"2019-06-30\"}"))
+                .andExpect(MockMvcResultMatchers.status().isBadRequest)
+    }
+
+    @Test
     fun roomAvailability_whenWrongDateFormat_then400() {
         mockMvc.perform(post(AvailabilityController.AvailabilityEndpoint)
                 .contentType(MediaType.APPLICATION_JSON)
