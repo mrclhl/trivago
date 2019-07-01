@@ -13,17 +13,12 @@ import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RestController
 
 @RestController
-class AvailabilityController {
+class AvailabilityController(@Autowired private val availabilityService: AvailabilityService,
+                             private val timeService: TimeService) {
 
     companion object {
         const val AvailabilityEndpoint = "/availability"
     }
-
-    @Autowired
-    private lateinit var availabilityService: AvailabilityService
-
-    @Autowired
-    private lateinit var timeService: TimeService
 
     @PostMapping(AvailabilityEndpoint, consumes = [APPLICATION_JSON_VALUE], produces = [APPLICATION_JSON_VALUE])
     fun roomAvailability(@RequestBody availabilityRequest: AvailabilityRequest): BaseResponse{

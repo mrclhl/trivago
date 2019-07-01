@@ -12,18 +12,13 @@ import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RestController
 
 @RestController
-class ReservationController {
+class ReservationController(@Autowired private val reservationService: ReservationService,
+                            private val timeService: TimeService) {
 
     companion object {
         const val ReservationEndpoint = "/reservation"
-        const val VerificationEndpoint = "${ReservationEndpoint}/verification"
+        const val VerificationEndpoint = "/verification"
     }
-
-    @Autowired
-    private lateinit var reservationService: ReservationService
-
-    @Autowired
-    private lateinit var timeService: TimeService
 
     @PostMapping(ReservationEndpoint, consumes = [(MimeTypeUtils.APPLICATION_JSON_VALUE)], produces = [(MimeTypeUtils.APPLICATION_JSON_VALUE)])
     fun reservation(@RequestBody reservationRequest: ReservationRequest): ReservationResponse {

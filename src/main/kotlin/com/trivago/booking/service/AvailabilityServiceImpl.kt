@@ -8,10 +8,7 @@ import org.springframework.stereotype.Service
 import java.time.LocalDate
 
 @Service
-class AvailabilityServiceImpl : AvailabilityService {
-
-    @Autowired
-    private lateinit var availabilityRepository: AvailabilityRepository
+class AvailabilityServiceImpl(@Autowired private val availabilityRepository: AvailabilityRepository) : AvailabilityService {
 
     override fun retrieveAvailableRoomTypes(startDate: String, endDate: String, roomGuests: List<RoomGuests>?): List<Room> {
         val parsedStartDate = LocalDate.parse(startDate)

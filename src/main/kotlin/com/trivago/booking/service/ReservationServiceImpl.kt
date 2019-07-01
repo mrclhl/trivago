@@ -14,15 +14,8 @@ import java.time.temporal.ChronoUnit
 import java.util.Random
 
 @Service
-class ReservationServiceImpl : ReservationService {
-
-    private val charPool : List<Char> = ('A'..'Z') + ('0'..'9')
-
-    @Autowired
-    private lateinit var reservationRepository: ReservationRepository
-
-    @Autowired
-    private lateinit var availabilityService: AvailabilityService
+class ReservationServiceImpl(@Autowired private val reservationRepository: ReservationRepository,
+                             private val availabilityService: AvailabilityService) : ReservationService {
 
     override fun makeReservation(startDate: String, endDate: String, customerFullName: String, customerMail: String, roomTypes: List<RoomType>): String {
         val parsedStartDate = LocalDate.parse(startDate)
@@ -82,6 +75,7 @@ class ReservationServiceImpl : ReservationService {
     }
 
     fun createReferenceCode(): String {
+        val charPool : List<Char> = ('A'..'Z') + ('0'..'9')
         val reference = (1..6).map { Random().nextInt(charPool.size) }.map(charPool::get).joinToString("")
         val referenceAlreadyExisting = reservationRepository.referenceAlreadyExisting(reference)
 

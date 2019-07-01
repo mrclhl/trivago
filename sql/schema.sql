@@ -18,7 +18,6 @@ FOREIGN KEY (roomCode) REFERENCES RoomType (roomCode)
 CREATE TABLE RoomPrice (
 roomCode VARCHAR(3) NOT NULL,
 price DOUBLE PRECISION NOT NULL,
-currency VARCHAR(3),
 FOREIGN KEY (roomCode) REFERENCES RoomType (roomCode)
 );
 
