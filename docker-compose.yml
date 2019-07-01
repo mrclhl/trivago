@@ -3,19 +3,18 @@ networks:
   internal-net:
    name: workbench_subnet
 services:
-#  backend:
-#    image: openjdk:8
-#    container_name: backend
-#    networks:
-#      - internal-net
-#    volumes:
-#      - /Users/marcelheil/Documents/Workspace/booking/target:/opt/assets/
-#    environment:
-#      - SPRING_PROFILES_ACTIVE=production
-#    command: java -Xdebug -Xrunjdwp:server=y,transport=dt_socket,suspend=n -jar /opt/assets/booking-0.0.1-SNAPSHOT.jar
-#    # or even command: java -jar -Dspring.profiles.active=production demo-0.0.1-SNAPSHOT.jar
-#    ports:
-#      - "8080:8080"
+  backend:
+    image: openjdk:8
+    container_name: backend
+    networks:
+      - internal-net
+    volumes:
+      - /Users/marcelheil/Documents/Workspace/booking/target:/opt/assets/
+    environment:
+      - SPRING_PROFILES_ACTIVE=production
+    command: java -jar /opt/assets/booking-0.0.1-SNAPSHOT.jar
+    ports:
+      - "8080:8080"
   db:
     image: postgres:latest
     container_name: db
