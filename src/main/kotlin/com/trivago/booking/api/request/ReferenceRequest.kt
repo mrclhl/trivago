@@ -1,6 +1,6 @@
 package com.trivago.booking.api.request
 
-import com.trivago.booking.api.exceptions.WrongReferenceFormatException
+import com.trivago.booking.exceptions.WrongReferenceFormatException
 
 
 class ReferenceRequest {

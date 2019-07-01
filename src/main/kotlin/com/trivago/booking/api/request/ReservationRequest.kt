@@ -1,9 +1,9 @@
 package com.trivago.booking.api.request
 
-import com.trivago.booking.api.exceptions.InvalidEmailException
-import com.trivago.booking.api.exceptions.InvalidNameException
-import com.trivago.booking.api.exceptions.RoomCodeMissingException
-import com.trivago.booking.api.exceptions.RoomGuestMissingException
+import com.trivago.booking.exceptions.InvalidEmailException
+import com.trivago.booking.exceptions.InvalidNameException
+import com.trivago.booking.exceptions.RoomCodeMissingException
+import com.trivago.booking.exceptions.RoomGuestMissingException
 
 
 class ReservationRequest : BaseRequest() {

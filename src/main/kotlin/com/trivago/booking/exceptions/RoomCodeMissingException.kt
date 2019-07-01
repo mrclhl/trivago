@@ -1,3 +1,3 @@
-package com.trivago.booking.api.exceptions
+package com.trivago.booking.exceptions
 
 data class RoomCodeMissingException(override val message: String) : BaseException()

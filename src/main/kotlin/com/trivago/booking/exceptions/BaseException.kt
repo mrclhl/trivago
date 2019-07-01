@@ -1,4 +1,4 @@
-package com.trivago.booking.api.exceptions
+package com.trivago.booking.exceptions
 
 open class BaseException(message: String?) : RuntimeException(message) {
 

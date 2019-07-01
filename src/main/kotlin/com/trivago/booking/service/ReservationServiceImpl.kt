@@ -1,8 +1,8 @@
 package com.trivago.booking.service
 
-import com.trivago.booking.api.exceptions.BookingDoesNotExistException
-import com.trivago.booking.api.exceptions.ReservationNotPossibleException
 import com.trivago.booking.api.request.RoomType
+import com.trivago.booking.exceptions.BookingDoesNotExistException
+import com.trivago.booking.exceptions.ReservationNotPossibleException
 import com.trivago.booking.model.Booking
 import com.trivago.booking.model.Reservation
 import com.trivago.booking.model.RoomGuests
@@ -34,8 +34,9 @@ class ReservationServiceImpl : ReservationService {
             val occupancy = roomType.occupancy
             val availableRoom = availabilityService.retrieveAvailableRoom(parsedStartDate, parsedEndDate, roomTypeCode, occupancy)
 
-            if (availableRoom != null) {
-                reservations.add(Reservation(parsedStartDate, parsedEndDate,
+            when (availableRoom) {
+                null -> throw ReservationNotPossibleException("One or more room types are not available.")
+                else -> reservations.add(Reservation(parsedStartDate, parsedEndDate,
                         occupancy.adults, occupancy.juniors, occupancy.babies,
                         availableRoom.roomId!!))
             }

@@ -1,12 +1,12 @@
 package com.trivago.booking.spring
 
-import com.trivago.booking.api.exceptions.BookingDoesNotExistException
-import com.trivago.booking.api.exceptions.DateFormatException
-import com.trivago.booking.api.exceptions.InvalidDateRangeException
-import com.trivago.booking.api.exceptions.InvalidEmailException
-import com.trivago.booking.api.exceptions.InvalidNameException
-import com.trivago.booking.api.exceptions.ReservationNotPossibleException
-import com.trivago.booking.api.exceptions.WrongReferenceFormatException
+import com.trivago.booking.exceptions.BookingDoesNotExistException
+import com.trivago.booking.exceptions.DateFormatException
+import com.trivago.booking.exceptions.InvalidDateRangeException
+import com.trivago.booking.exceptions.InvalidEmailException
+import com.trivago.booking.exceptions.InvalidNameException
+import com.trivago.booking.exceptions.ReservationNotPossibleException
+import com.trivago.booking.exceptions.WrongReferenceFormatException
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.ControllerAdvice
