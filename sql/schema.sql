@@ -82,17 +82,17 @@ INSERT INTO Rooms (roomCode) VALUES ('APT');
 
 -- Add room prices
 -- Double Standard
-INSERT INTO RoomPrice (roomCode, price, currency) VALUES ('DST', 99.0, 'EUR');
+INSERT INTO RoomPrice (roomCode, price) VALUES ('DST', 99.0);
 -- Double Superior
-INSERT INTO RoomPrice (roomCode, price, currency) VALUES ('DSP', 119.0, 'EUR');
+INSERT INTO RoomPrice (roomCode, price) VALUES ('DSP', 119.0);
 -- Family Small
-INSERT INTO RoomPrice (roomCode, price, currency) VALUES ('FMS', 149.0, 'EUR');
+INSERT INTO RoomPrice (roomCode, price) VALUES ('FMS', 149.0);
 -- Family Large
-INSERT INTO RoomPrice (roomCode, price, currency) VALUES ('FML', 169.0, 'EUR');
+INSERT INTO RoomPrice (roomCode, price) VALUES ('FML', 169.0);
 -- Junior Suites
-INSERT INTO RoomPrice (roomCode, price, currency) VALUES ('JST', 159.0, 'EUR');
+INSERT INTO RoomPrice (roomCode, price) VALUES ('JST', 159.0);
 -- Apartments
-INSERT INTO RoomPrice (roomCode, price, currency) VALUES ('APT', 199.0, 'EUR');
+INSERT INTO RoomPrice (roomCode, price) VALUES ('APT', 199.0);
 
 COMMIT;
 

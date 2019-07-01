@@ -17,7 +17,7 @@ class ReservationController(@Autowired private val reservationService: Reservati
 
     companion object {
         const val ReservationEndpoint = "/reservation"
-        const val VerificationEndpoint = "/verification"
+        const val VerificationEndpoint = "$ReservationEndpoint/verification"
     }
 
     @PostMapping(ReservationEndpoint, consumes = [(MimeTypeUtils.APPLICATION_JSON_VALUE)], produces = [(MimeTypeUtils.APPLICATION_JSON_VALUE)])

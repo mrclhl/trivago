@@ -11,7 +11,7 @@
 The endpoint provides the possibility to verify an existing reservation reference.
 
 == Endpoint
-The service is available at the `/verification` endpoint via *POST* method.
+The service is available at the `/reservation/verification` endpoint via *POST* method.
 
 === Request parameters
 The service does not use request parameters.
