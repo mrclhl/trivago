@@ -11,7 +11,6 @@ import org.mockito.Mock
 import org.mockito.Mockito.verify
 import org.mockito.junit.MockitoJUnitRunner
 import java.time.LocalDate
-import org.hamcrest.Matchers.`is` as Is
 import org.mockito.Mockito.`when` as whenever
 
 @RunWith(MockitoJUnitRunner::class)
