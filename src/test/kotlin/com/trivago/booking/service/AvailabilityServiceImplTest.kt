@@ -8,6 +8,7 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.InjectMocks
 import org.mockito.Mock
+import org.mockito.Mockito.verify
 import org.mockito.junit.MockitoJUnitRunner
 import java.time.LocalDate
 import org.hamcrest.Matchers.`is` as Is
@@ -21,6 +22,15 @@ class AvailabilityServiceImplTest {
 
     @Mock
     private lateinit var availabilityRepository: AvailabilityRepository
+
+    @Test
+    fun retrieveAvailableRoomTypes_whenNoRoomsAvailableAndRoomGuestsNull_thenReturnEmptyList() {
+        whenever(availabilityRepository.retrieveAvailableRoomTypes(LocalDate.parse("2019-06-25"), LocalDate.parse("2019-06-30"))).thenReturn(emptyList())
+
+        val availableRoomTypes = availabilityServiceImpl.retrieveAvailableRoomTypes("2019-06-25", "2019-06-30", null)
+
+        assertThat(availableRoomTypes).isEmpty()
+    }
 
     @Test
     internal fun retrieveAvailableRoomTypes_whenRoomGuestsNull_thenReturnAllAvailableRoomOptions() {
@@ -48,6 +58,18 @@ class AvailabilityServiceImplTest {
         assertThat(availableRoomTypes[1].roomGuests.babies).isEqualTo(1)
         assertThat(availableRoomTypes[1].amount).isEqualTo(169.0)
         assertThat(availableRoomTypes[1].roomsAvailable).isEqualTo(2)
+    }
+
+    @Test
+    fun retrieveAvailableRoomTypes_whenRoomGuestsDefinedButNoRoomsAvailable_thenReturnEmptyList() {
+        val requestedGuestsRoom1 = RoomGuests(1, null, null)
+        val requestedGuestsRoom2 = RoomGuests(2, 1, 1)
+        whenever(availabilityRepository.retrieveAvailableRoomTypesByOccupancy(LocalDate.parse("2019-06-25"), LocalDate.parse("2019-06-30"), requestedGuestsRoom1)).thenReturn(emptyList())
+        whenever(availabilityRepository.retrieveAvailableRoomTypesByOccupancy(LocalDate.parse("2019-06-25"), LocalDate.parse("2019-06-30"), requestedGuestsRoom2)).thenReturn(emptyList())
+
+        val availableRoomTypes = availabilityServiceImpl.retrieveAvailableRoomTypes("2019-06-25", "2019-06-30", listOf(requestedGuestsRoom1, requestedGuestsRoom2))
+
+        assertThat(availableRoomTypes).isEmpty()
     }
 
     @Test
@@ -85,5 +107,17 @@ class AvailabilityServiceImplTest {
         assertThat(availableRoomTypes[2].roomGuests.juniors).isEqualTo(1)
         assertThat(availableRoomTypes[2].roomGuests.babies).isEqualTo(1)
         assertThat(availableRoomTypes[2].amount).isEqualTo(169.0)
+    }
+
+    @Test
+    fun retrieveAvailableRoom_verifyRepoCall() {
+        val requestedRoomGuests = RoomGuests(1, null, null)
+        val startDate = LocalDate.parse("2019-06-25")
+        val endDate = LocalDate.parse("2019-06-30")
+        val roomTypeCode = "DST"
+
+        availabilityServiceImpl.retrieveAvailableRoom(startDate, endDate, roomTypeCode, requestedRoomGuests)
+
+        verify(availabilityRepository).retrieveAvailableRoom(startDate, endDate, roomTypeCode, requestedRoomGuests)
     }
 }
