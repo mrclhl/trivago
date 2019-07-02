@@ -24,7 +24,7 @@ If you retrieved a .zip file containing the project folder, you do not need to b
 directory anddirectly go to the next step 'Run the application'.
 
 ## Run the application
-- Execute 'docker-compose' to run the postgresql database and the application
+- Execute 'docker-compose up' to run the postgresql database and the application
 - The application will be available via http://localhost:8080/
 
 #### Documentation
