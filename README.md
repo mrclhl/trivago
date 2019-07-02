@@ -44,6 +44,8 @@ There are definitely some architectural decisions that can be discussed, e.g.
 couple the application closely to the database. Instead, I am using POJO's to remain flexible and be apple to work with
 any data source more easily.
 
+* I've decided to use 'docker-compose' over Dockerfile as it is the much more readable and more simple approach IMO.
+
 * A full test coverage could obviously not be done given the time constraint and tasks. However, there is a good coverage
 for controller tests including documentation and the services.
 
