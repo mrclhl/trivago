@@ -29,9 +29,9 @@ directory anddirectly go to the next step 'Run the application'.
 
 #### Documentation
 ##### Documentation of the endpoints is available via
-* /availability.html
-* /reservation.html
-* /verification.html
+* /docs/availability.html
+* /docs/reservation.html
+* /docs/verification.html
 
 #### Kill the container
 * Execute 'docker-compose down'

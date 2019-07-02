@@ -105,8 +105,8 @@ class ReservationControllerTest : BaseTestController() {
     @Test
     fun reservation_whenInputProper_thenReturnExpectedResponse() {
         val room = Room(null, "DST", "Double Standard", RoomGuests(2, null, null), 99.0, null)
-        val booking = Booking("2019-06-25", "2019-06-30", 495.0, "Marcel Heil", "marcel@heil.com", listOf(room))
-        val today = LocalDate.parse("2019-06-01")
+        val booking = Booking("2019-07-25", "2019-07-30", 495.0, "Marcel Heil", "marcel@heil.com", listOf(room))
+        val today = LocalDate.parse("2019-07-01")
 
         whenever(timeService.retrieveCurrentDate()).thenReturn(today)
         whenever(reservationService.makeReservation(ArgumentMatchers.anyString(), ArgumentMatchers.anyString(), ArgumentMatchers.anyString(), ArgumentMatchers.anyString(), ArgumentMatchers.anyList())).thenReturn("A1B2C3")
@@ -114,7 +114,7 @@ class ReservationControllerTest : BaseTestController() {
 
         mockMvc.perform(MockMvcRequestBuilders.post(ReservationEndpoint)
                 .contentType(MediaType.APPLICATION_JSON)
-                .content("{\"startDate\":\"2019-06-25\",\"endDate\":\"2019-06-30\", " +
+                .content("{\"startDate\":\"2019-07-25\",\"endDate\":\"2019-07-30\", " +
                         "\"customerFullName\": \"Marcel Heil\", \"customerMail\": \"marcel@heil.com\", " +
                         "\"roomTypes\": [{\"roomTypeCode\": \"DST\", \"occupancy\": {\"adults\": 2, \"juniors\": 0, \"babies\": 0}}]}"))
                 .andExpect(MockMvcResultMatchers.status().isOk)
@@ -139,7 +139,7 @@ class ReservationControllerTest : BaseTestController() {
     @Test
     fun verification_whenValid_Reference_thenReturnExpectedResponse() {
         val room = Room(null, "DST", "Double Standard", RoomGuests(2, null, null), 99.0, null)
-        val booking = Booking("2019-06-25", "2019-06-30", 495.0, "Marcel Heil", "marcel@heil.com", listOf(room))
+        val booking = Booking("2019-07-25", "2019-07-30", 495.0, "Marcel Heil", "marcel@heil.com", listOf(room))
 
         whenever(reservationService.retrieveReservation(ArgumentMatchers.anyString())).thenReturn(booking)
 
@@ -153,8 +153,8 @@ class ReservationControllerTest : BaseTestController() {
 
     private fun ResultActions.andExpectResponse(): ResultActions {
         this
-                .andExpect(MockMvcResultMatchers.jsonPath("startDate", Matchers.`is`("2019-06-25")))
-                .andExpect(MockMvcResultMatchers.jsonPath("endDate", Matchers.`is`("2019-06-30")))
+                .andExpect(MockMvcResultMatchers.jsonPath("startDate", Matchers.`is`("2019-07-25")))
+                .andExpect(MockMvcResultMatchers.jsonPath("endDate", Matchers.`is`("2019-07-30")))
                 .andExpect(MockMvcResultMatchers.jsonPath("reference", Matchers.`is`("A1B2C3")))
                 .andExpect(MockMvcResultMatchers.jsonPath("totalAmount", Matchers.`is`(495.0)))
                 .andExpect(MockMvcResultMatchers.jsonPath("customerFullName", Matchers.`is`("Marcel Heil")))

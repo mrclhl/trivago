@@ -76,14 +76,14 @@ class AvailabilityControllerTest : BaseTestController() {
     @Test
     fun roomAvailability_whenInputProper_thenReturnExpectedResponse() {
         val room = Room(null, "DST", "Double Standard", RoomGuests(2, null, null), 99.0, 4)
-        val today = LocalDate.parse("2019-06-01")
+        val today = LocalDate.parse("2019-07-01")
 
         whenever(timeService.retrieveCurrentDate()).thenReturn(today)
         whenever(availabilityService.retrieveAvailableRoomTypes(ArgumentMatchers.anyString(), ArgumentMatchers.anyString(), ArgumentMatchers.anyList())).thenReturn(listOf(room))
 
         mockMvc.perform(post(AvailabilityController.AvailabilityEndpoint)
                 .contentType(MediaType.APPLICATION_JSON)
-                .content("{\"startDate\":\"2019-06-29\",\"endDate\":\"2019-06-30\"," +
+                .content("{\"startDate\":\"2019-07-29\",\"endDate\":\"2019-07-30\"," +
                         "\"occupancy\": [{\"adults\": 2, \"juniors\": 0, \"babies\": 0}]}"))
                 .andExpect(MockMvcResultMatchers.status().isOk)
                 .andExpectResponse()
@@ -92,8 +92,8 @@ class AvailabilityControllerTest : BaseTestController() {
 
     private fun ResultActions.andExpectResponse(): ResultActions {
         this
-                .andExpect(MockMvcResultMatchers.jsonPath("startDate", Is("2019-06-29")))
-                .andExpect(MockMvcResultMatchers.jsonPath("endDate", Is("2019-06-30")))
+                .andExpect(MockMvcResultMatchers.jsonPath("startDate", Is("2019-07-29")))
+                .andExpect(MockMvcResultMatchers.jsonPath("endDate", Is("2019-07-30")))
                 .andExpect(MockMvcResultMatchers.jsonPath("roomTypes[0].roomTypeCode", Is("DST")))
                 .andExpect(MockMvcResultMatchers.jsonPath("roomTypes[0].roomTypeName", Is("Double Standard")))
                 .andExpect(MockMvcResultMatchers.jsonPath("roomTypes[0].occupancy.adults", Is(2)))
