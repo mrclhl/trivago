@@ -10,8 +10,8 @@ services:
       - internal-net
     volumes:
       - ./target:/opt/assets/
-    environment:
-      - SPRING_PROFILES_ACTIVE=production
+    #environment:
+      #- SPRING_PROFILES_ACTIVE=production
     command: java -jar /opt/assets/booking-0.0.1-SNAPSHOT.jar
     ports:
       - "8080:8080"

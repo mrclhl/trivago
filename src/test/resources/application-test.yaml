@@ -3,8 +3,3 @@ spring:
     url: jdbc:h2:mem:test;MODE=MSSQLServer
     driver-class-name: org.h2.Driver
     username: sa
-
-hibernate:
-  show_sql: false
-  hbm2ddl:
-    auto: none
