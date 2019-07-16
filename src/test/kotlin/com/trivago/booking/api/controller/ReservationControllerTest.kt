@@ -15,6 +15,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest
 import org.springframework.boot.test.mock.mockito.MockBean
 import org.springframework.http.MediaType
 import org.springframework.restdocs.mockmvc.MockMvcRestDocumentation
+import org.springframework.restdocs.payload.JsonFieldType
 import org.springframework.restdocs.payload.PayloadDocumentation
 import org.springframework.restdocs.payload.ResponseFieldsSnippet
 import org.springframework.test.web.servlet.ResultActions
@@ -245,11 +246,11 @@ class ReservationControllerTest : BaseTestController() {
                 PayloadDocumentation.fieldWithPath("roomTypes[].occupancy")
                         .description("Represents the requested occupancy for a room type."),
                 PayloadDocumentation.fieldWithPath("roomTypes[].occupancy.adults")
-                        .description("The number of adults.").optional().type(Int),
+                        .description("The number of adults.").optional().type(JsonFieldType.NUMBER),
                 PayloadDocumentation.fieldWithPath("roomTypes[].occupancy.juniors")
-                        .description("The number of juniors.").optional().type(Int),
+                        .description("The number of juniors.").optional().type(JsonFieldType.NUMBER),
                 PayloadDocumentation.fieldWithPath("roomTypes[].occupancy.babies")
-                        .description("The number of babies.").optional().type(Int),
+                        .description("The number of babies.").optional().type(JsonFieldType.NUMBER),
                 PayloadDocumentation.fieldWithPath("roomTypes[].amount")
                         .description("The amount for a one night stay in the given room type.")
         )

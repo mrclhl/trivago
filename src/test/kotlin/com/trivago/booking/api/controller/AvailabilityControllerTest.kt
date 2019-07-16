@@ -11,6 +11,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest
 import org.springframework.boot.test.mock.mockito.MockBean
 import org.springframework.http.MediaType
 import org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document
+import org.springframework.restdocs.payload.JsonFieldType
 import org.springframework.restdocs.payload.PayloadDocumentation
 import org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath
 import org.springframework.restdocs.payload.PayloadDocumentation.requestFields
@@ -139,11 +140,11 @@ class AvailabilityControllerTest : BaseTestController() {
                         fieldWithPath("roomTypes[].occupancy")
                                 .description("Represents the possible occupancy for a room type."),
                         fieldWithPath("roomTypes[].occupancy.adults")
-                                .description("The possible number of adult guests for this room type.").optional().type(Int),
+                                .description("The possible number of adult guests for this room type.").optional().type(JsonFieldType.NUMBER),
                         fieldWithPath("roomTypes[].occupancy.juniors")
-                                .description("The possible number of junior guests for this room type.").optional().type(Int),
+                                .description("The possible number of junior guests for this room type.").optional().type(JsonFieldType.NUMBER),
                         fieldWithPath("roomTypes[].occupancy.babies")
-                                .description("The possible number of baby guests for this room type.").optional().type(Int),
+                                .description("The possible number of baby guests for this room type.").optional().type(JsonFieldType.NUMBER),
                         fieldWithPath("roomTypes[].amount")
                                 .description("The amount for a one night stay in the given room type."),
                         fieldWithPath("roomTypes[].roomsAvailable")
