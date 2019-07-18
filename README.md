@@ -41,7 +41,7 @@ directory anddirectly go to the next step 'Run the application'.
 There are definitely some architectural decisions that can be discussed, e.g. 
 * input validation could also be done in the service layer
 * I've decided to NOT use hibernate entities for the sake of keeping the architecture clean. Using hibernate entities will
-couple the application closely to the database. Instead, I am using POJO's to remain flexible and be apple to work with
+couple the application closely to the database. Instead, I am using POJO's to remain flexible and be able to work with
 any data source more easily.
 
 * I've decided to use 'docker-compose' over Dockerfile as it is the much more readable and more simple approach IMO.
